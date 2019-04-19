@@ -1,0 +1,37 @@
+
+<div class="row">
+  <div>
+    <img src="/assets/img/hamburger.jpg" alt="hamburger">
+  </div>
+  <div id="div" class="col-lg-8">
+    <h1>Eat Da Burger 😋</h1>
+
+    <form action="POST">
+      <input type="text-area">
+      <button type="submit">Make Da Burger</button>
+    </form>
+
+    {{#each burgers}}
+      <div class="teal">
+        <h3 data-id="{{burger_name}}">{{id}}. {{burger_name}}</h3>
+        <button data-id="{{id}}" class="devour">Eat Da Burger</button>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<script type="text/javascript">
+$('.devour').on('click', function(event) {
+  var id = $(this).data('id');
+  var devoured = {
+    devoured: true
+  }
+  $.ajax('/api/burgers/' + id, {
+    type: 'PUT',
+    data: devoured
+  }).then(function() {
+    console.log('burger devoured');
+    location.reload();
+  });
+});
+</script>
